@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="product" type="com.web.innjoy.vo.Product"/>
+		<typeAlias alias="room" type="com.web.innjoy.vo.Room"/>
+		<typeAlias alias="bsn_user" type="com.web.innjoy.vo.Bsn_user"/>
+		<typeAlias alias="ProRoom" type="com.web.innjoy.vo.ProRoom"/>
+	</typeAliases>
+</configuration>

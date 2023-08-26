@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.web.innjoy.dao.BsnDao">
+	
+	<resultMap type ="ProRoom" id = "pr">
+		<association property="product" javaType="Product">
+			<id column="pro_id" property="pro_id"/>
+			<result column="bns_id" property="bns_id"/>
+			<result column="pro_type_id" property="pro_type_id"/>
+			<result column="pro_name" property="pro_name"/>
+			<result column="pro_loc" property="pro_loc"/>
+			<result column="basic_info" property="basic_info"/>
+			<result column="res_ann" property="res_ann"/>
+			<result column="ser_conts" property="ser_conts"/>
+		</association>
+		<association property="room" javaType="Room">
+			<id column="room_id" property="room_id"/>
+			<result column="room_name" property="room_name"/>
+			<result column="room_price" property="room_price"/>
+			<result column="checkin" property="checkin"/>
+			<result column="checkout" property="checkout"/>
+			<result column="min_cnt" property="min_cnt"/>
+			<result column="max_cnt" property="max_cnt"/>
+			<result column="smoking" property="smoking"/>
+			<result column="bed_cnt" property="bed_cnt"/>
+			<result column="pro_id" property="pro_id"/>
+		</association>
+	</resultMap>
+
+	<select id="getRoomsByBsnId" resultMap="pr">
+		SELECT p.PRO_NAME || ' - ' || m.ROOM_NAME AS roomList
+		FROM room m
+		INNER JOIN PRODUCT p ON p.pro_id = m.pro_id
+		WHERE p.bsn_id = #{bsn_id}
+	</select>
+	
+</mapper>
