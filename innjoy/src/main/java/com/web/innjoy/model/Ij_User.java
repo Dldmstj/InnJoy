@@ -2,6 +2,8 @@ package com.web.innjoy.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -36,6 +38,9 @@ public class Ij_User {
 
 	@OneToMany(mappedBy="ijUser")
 	private List<Reservation> reservation;
+	
+	@OneToMany(mappedBy="ijUser")
+	private List<Recomm_comm> recomm_comm;
 
 	public Ij_User() {}
 	

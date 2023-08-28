@@ -97,6 +97,7 @@ CREATE TABLE reservation (
    FOREIGN KEY (user_id) REFERENCES ij_user(user_id),
    FOREIGN KEY (room_id) REFERENCES room(room_id)
 );
+SELECT * FROM RESERVATION r ;
 
 CREATE TABLE review (
    review_id   number   NOT NULL,
@@ -129,6 +130,7 @@ CREATE TABLE recomm_comm (
    FOREIGN KEY (recom_id) REFERENCES recomm(recom_id),
    FOREIGN KEY (user_id) REFERENCES ij_user(user_id)
 );
+SELECT * FROM recomm_comm;
 
 CREATE TABLE pro_img (
    pro_ino   number   NOT NULL,
@@ -336,6 +338,11 @@ SELECT 1, 4, '숙소가 깨끗하고 좋았어요 주변에 편의점도 바로 
 UNION ALL
 SELECT 2, 1, '침대 구석에 머리카락이 뭉치로 있고 화장실도 미끄러워요. 혹시라도 이 숙소에 묵으실 분들은 머리 깨질 준비하고 가세요', TO_DATE('2023-08-19 4:42', 'YYYY-MM-DD HH24:MI'), 2 FROM dual;
 
+INSERT INTO review (review_id, star, review_det, rev_time,  reservation_id) VALUES(3, 5, '숙소가 깨끗하고 좋았어요', TO_DATE('2023-08-24 4:42', 'YYYY-MM-DD HH24:MI'), 3);
+
+SELECT * FROM REVIEW;
+
+
 
 SELECT * FROM recomm;
 -- 추천게시물
@@ -360,7 +367,7 @@ UNION ALL
 SELECT 2, 2, 'ekdms222', '저도 거기 갔다왔는데 저는 별로였어요;;', TO_DATE('2023-08-19 12:46', 'YYYY-MM-DD HH24:MI') FROM dual
 UNION ALL
 SELECT 3, 3, 'dmstj333', '사장불친절끝판왕', TO_DATE('2023-08-20 3:44', 'YYYY-MM-DD HH24:MI') FROM dual;
-
+SELECT * FROM recomm;
 
 SELECT *FROM pro_img;
 -- 상품 이미지

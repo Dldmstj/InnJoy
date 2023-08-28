@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.web.innjoy.model.Ij_User;
+import com.web.innjoy.model.Recomm_comm;
 import com.web.innjoy.model.Reservation;
-import com.web.innjoy.model.Review;
 import com.web.innjoy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,12 +33,12 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
-	
-	// 로그인
-	@RequestMapping("login_auth")
-	public String loginAuth() {
-		return "user/login_auth";
-	}
+	/*
+	 * // 로그인 (security)
+	 * 
+	 * @RequestMapping("login_auth") public String loginAuth() { return
+	 * "user/login_auth"; }
+	 */
 	
 	// 회원가입
 	@RequestMapping("signup")
@@ -58,16 +58,35 @@ public class UserController {
 	    // model : 나의 예약 리스트
 	    List<Reservation> rlist = userService.getMyResList(user);
 	    model.addAttribute("rlist", rlist);	// model : reservation List
+	    // model : 예약 상세정보
+//	    for(Reservation res: rlist) {
+//	    	int resId = res.getReservationId(); 
+//	    	res= userService.getResDetail(resId);
+//	    	model.addAttribute("reservation", res);
+//	    }
 		return "user/myPage";
 	}
     
     // 내 활동 내역
 	@RequestMapping("/sec/myboardlist")
 	public String myBoardList(HttpSession session, Model model) {
-		Ij_User user = (Ij_User) session.getAttribute("ij_User");
+		Ij_User user = (Ij_User) session.getAttribute("ij_user");
+		// model : 나의 예약 리스트
 		List<Reservation> rlist = userService.getMyResList(user);
 		model.addAttribute("rlist",rlist);
+		// model : 나의 댓글 리스트
+		List<Recomm_comm> commList = userService.getMyCommList(user);
+		model.addAttribute("comments", commList);
 		return "user/myBoardList";
+	}
+	
+	// 예약하기
+	@RequestMapping("/sec/reservationForm")
+	public String ReservationForm(HttpSession session, Model model) {
+		Ij_User user = (Ij_User) session.getAttribute("ij_user");
+		// model: 유저 정보
+		model.addAttribute("userInfo", user);
+		return "user/product_reservation";
 	}
 	
 	// 예약내역 상세보기

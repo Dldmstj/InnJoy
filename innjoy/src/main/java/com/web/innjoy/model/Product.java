@@ -3,6 +3,8 @@ package com.web.innjoy.model;
 import java.sql.Clob;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

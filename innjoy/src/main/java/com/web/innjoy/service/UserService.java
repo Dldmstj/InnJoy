@@ -6,16 +6,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.web.innjoy.dto.ReservationDto;
 import com.web.innjoy.model.Admin;
 import com.web.innjoy.model.Bsn_User;
 import com.web.innjoy.model.Ij_User;
+import com.web.innjoy.model.Recomm_comm;
 import com.web.innjoy.model.Reservation;
-import com.web.innjoy.model.Review;
 import com.web.innjoy.repository.AdminRepository;
 import com.web.innjoy.repository.Bsn_UserRepository;
 import com.web.innjoy.repository.Ij_UserRepository;
+import com.web.innjoy.repository.Recomm_CommRepository;
 import com.web.innjoy.repository.ResRepository;
-import com.web.innjoy.repository.ReviewRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -31,8 +32,7 @@ public class UserService{
 	@Autowired
 	private ResRepository resRepository;
 	@Autowired
-	private ReviewRepository revRepository;
-
+	private Recomm_CommRepository commRepository;
 
 	/* 일반회원 */
 	
@@ -64,13 +64,37 @@ public class UserService{
     	 return userRepository.findById(userId)
                  .orElseThrow(() -> new EntityNotFoundException("회원 찾기 실패"));
     }
-    // 예약내역 조회
+    // 예약 내역 조회
     public List<Reservation> getMyResList(Ij_User user){
     	return resRepository.findByIjUser(user);
     }
-    // 내가 쓴 후기 조회
-    public List<Review> getMyReviewList(Reservation res){
-    	return revRepository.findByReservation(res);
+    // 예약 상세내역 조회
+    public ReservationDto getResDetail(int id) {
+    	System.out.println("reservation id: "+id);
+    	Reservation res = resRepository.findByReservationId(id);
+    	ReservationDto resDto = new ReservationDto(
+    			res.getReservationId(),
+    			res.getIjUser().getUserName(),
+    			res.getIjUser().getUserPhone(),
+    			res.getRoom().getProduct().getProName(),
+//    			res.getRoom().getProduct().getProLoc(),
+    			res.getRoom().getRoomName(),
+    			res.getUserCnt(),
+    			res.getStartDt(),
+    			res.getEndDt(),
+    			res.getPayment(),
+    			res.getStatus()
+    			);
+    	return resDto;
+    }
+    
+    // 내가 쓴 댓글 조회
+    public List<Recomm_comm> getMyCommList(Ij_User user){
+    	return commRepository.findByIjUser(user);
+    }
+    // 예약하기
+    public Reservation reservation(Reservation res) {
+    	return resRepository.save(res);
     }
     
     /* 사업자회원 */

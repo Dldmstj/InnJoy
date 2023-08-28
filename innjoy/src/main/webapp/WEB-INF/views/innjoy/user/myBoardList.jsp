@@ -130,7 +130,7 @@ a.list-group-item{
 				<div class="tab-pane fade show active" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
 						<div class="container px-4 px-lg-5">
 							<div class="row justify-content-center">
-							<c:forEach var="review" items="${rlist.review}">
+							<c:forEach var="rlist" items="${rlist}">
 								<div class="col mb-3">
 									<div class="d-flex flex-row card w-100">
 										<!-- Product image-->
@@ -138,10 +138,10 @@ a.list-group-item{
 										<!-- Product details-->
 										<a href="#" class="list-group-item list-group-item-action" aria-current="true">
 										    <div class="d-flex w-100 justify-content-between">
-										      <h5 class="fw-bolder pt-3 mb-1">4{review.reservation.product.proName}</h5>
+										      <h5 class="fw-bolder pt-3 mb-1">${rlist.room.product.proName}</h5>
 										      <small>3 days ago</small>
 										    </div>
-										    <p class="mb-1">${review.reviewDet}</p>
+										    <p class="mb-1">${rlist.review.reviewDet}</p>
 										</a>
 										<!-- Product actions-->
 										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
@@ -152,52 +152,14 @@ a.list-group-item{
 									</div>
 								</div>
 								</c:forEach>
-								<div class="col mb-3">
-									<div class="d-flex flex-row card w-100">
-										<!-- Product image-->
-										<img class="card-img-top" src="https://image.goodchoice.kr/resize_490x348/affiliate/2020/06/30/5efaee66a9fdb.jpg" alt="..." />
-										<!-- Product details-->
-										<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-										    <div class="d-flex w-100 justify-content-between">
-										      <h5 class="fw-bolder pt-3 mb-1">신라 스테이</h5>
-										      <small>5 days ago</small>
-										    </div>
-										    <p class="mb-1">good</p>
-										</a>
-										<!-- Product actions-->
-										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-											<div class="text-center pt-2">
-												<a id="delBtn" class="btn btn-outline-success mt-auto" href="#">삭제</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col mb-3">
-									<div class="d-flex flex-row card w-100">
-										<!-- Product image-->
-										<img class="card-img-top" src="https://image.goodchoice.kr/resize_490x348/affiliate/2020/07/01/5efc420c3609d.jpg" alt="..." />
-										<!-- Product details-->
-										<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-										    <div class="d-flex w-100 justify-content-between">
-										      <h5 class="fw-bolder pt-3 mb-1">펠릭스 by STX</h5>
-										      <small>13 days ago</small>
-										    </div>
-										    <p class="mb-1">접근성이 좋아요</p>
-										</a>
-										<!-- Product actions-->
-										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-											<div class="text-center pt-2">
-												<a id="delBtn" class="btn btn-outline-success mt-auto" href="#">삭제</a>
-											</div>
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
 				</div>
 				<div class="tab-pane fade" id="nav-board" role="tabpanel" aria-labelledby="nav-board-tab">
 					<div class="container px-4 px-lg-5">
 							<div class="row justify-content-center">
+								<c:forEach var="reservation" items="${rlist}">
+								<c:forEach var="recomm" items="${reservation.recomm}">
 								<div class="col mb-3">
 									<div class="d-flex flex-row card w-100">
 										<!-- Product image-->
@@ -205,10 +167,10 @@ a.list-group-item{
 										<!-- Product details-->
 										<a href="#" class="list-group-item list-group-item-action pl-5 ml-3" aria-current="true">
 										    <div class="d-flex w-100 justify-content-between">
-										      <h5 class="fw-bolder pt-3 mb-1">[맛집추천] 남이섬 꼬꼬닭갈비</h5>
-										      <small>3 days ago</small>
+										      <h5 class="fw-bolder pt-3 mb-1">${recomm.title }</h5>
+										      <small>${recomm.recomTime }</small>
 										    </div>
-										    <p class="mb-1">남이섬에 놀러갔다가 먹었어요.</p>
+										    <p class="mb-1">${recomm.detail}</p>
 										</a>
 										<!-- Product actions-->
 										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
@@ -218,41 +180,24 @@ a.list-group-item{
 										</div>
 									</div>
 								</div>
-								<div class="col mb-3">
-									<div class="d-flex flex-row card w-100">
-										<!-- Product image-->
-										<img class="card-img-top" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA2MjVfODkg%2FMDAxNjg3NjE5MDIyNzg2.I37-OrXRRG8rDzcSA-uWbdW1AjUHjSyABZs8vAr3evQg.EkIxtZlPHCw1eQa4KNup-WVRGoacOThZBQy-0QSo5yUg.JPEG.redch22ks%2F20230618%25A3%25DF110058.jpg&type=sc960_832" alt="..." />
-										<!-- Product details-->
-										<a href="#" class="list-group-item list-group-item-action pl-5 ml-3" aria-current="true">
-										    <div class="d-flex w-100 justify-content-between">
-										      <h5 class="fw-bolder pt-3 mb-1">[명소추천] 남이섬</h5>
-										      <small>3 days ago</small>
-										    </div>
-										    <p class="mb-1">ㅁㅁ숙소 근처 남이섬 재미있었어요.</p>
-										</a>
-										<!-- Product actions-->
-										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-											<div class="text-center pt-2">
-												<a id="delBtn" class="btn btn-outline-success mt-auto" href="#">삭제</a>
-											</div>
-										</div>
-									</div>
-								</div>
+								</c:forEach>
+								</c:forEach>
 							</div>
 						</div>
 				</div>
 				<div class="tab-pane fade" id="nav-reple" role="tabpanel" aria-labelledby="nav-reple-tab">
 					<div class="container px-4 px-lg-5">
 							<div class="row justify-content-center">
+								<c:forEach var="comment" items="${comments}">
 								<div class="col mb-3">
 									<div class="d-flex flex-row card w-100">
 										<!-- Product details-->
 										<a href="#" class="list-group-item list-group-item-action pl-5 ml-3" aria-current="true">
 										    <div class="d-flex w-100 justify-content-between">
-										      <h5 class="fw-bolder pt-2 mb-1">[명소추천] 남이섬</h5>
+										      <h5 class="fw-bolder pt-2 mb-1">${comment.recomm.title}</h5>
 										      <small>3 days ago</small>
 										    </div>
-										    <p class="mb-1">재밌었겠네요!!</p>
+										    <p class="mb-1">${comment.rcComDet }</p>
 										</a>
 										<!-- Product actions-->
 										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
@@ -262,23 +207,7 @@ a.list-group-item{
 										</div>
 									</div>
 								</div>
-								<div class="col mb-3">
-									<div class="d-flex flex-row card w-100">
-										<!-- Product details-->
-										<a href="#" class="list-group-item list-group-item-action pl-5 ml-3" aria-current="true">
-										    <div class="d-flex w-100 justify-content-between">
-										      <h5 class="fw-bolder pt-2 mb-1">[맛집추천] 남이섬 꼬꼬닭갈비</h5>
-										      <small>3 days ago</small>
-										    </div>
-										    <p class="mb-1">맛있었겠네요 !!</p>
-										</a>
-										<!-- Product actions-->
-										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-											<div class="text-center pt-2">
-												<a id="delBtn" class="btn btn-outline-success mt-auto" href="#">삭제</a>
-											</div>
-										</div>
-									</div>
+								</c:forEach>
 								</div>
 							</div>
 						</div>

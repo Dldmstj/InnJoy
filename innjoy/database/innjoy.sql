@@ -56,5 +56,33 @@ AND rec.recom_id = com.recom_id;
 -- 내가 쓴 게시물 조회
 SELECT * FROM ij_user u
 JOIN reservation r ON u.user_id = r.user_id
-JOIN recomm rc ON r.reservation_id = rc.reservation_id
+JOIN review rv ON r.reservation_id = rv.reservation_id
 WHERE  u.user_id = 'dmstj333';
+
+
+SELECT * FROM RESERVATION;
+
+-- 후기
+CREATE SEQUENCE review_seq
+START WITH 100
+INCREMENT BY 1;
+
+-- 게시물
+CREATE SEQUENCE recomm_seq
+START WITH 100
+INCREMENT BY 1;
+
+-- 댓글
+CREATE SEQUENCE seq_rc_com_id
+START WITH 100
+INCREMENT BY 1;
+
+-- 예약하기
+CREATE SEQUENCE reservation_seq
+START WITH 100
+INCREMENT BY 1;
+
+SELECT * FROM RESERVATION;
+SELECT * FROM PRODUCT p 
+
+DELETE FROM RESERVATION WHERE RESERVATION_ID = 10;

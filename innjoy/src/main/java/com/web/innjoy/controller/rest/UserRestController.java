@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.web.innjoy.dto.ReservationDto;
 import com.web.innjoy.model.Admin;
 import com.web.innjoy.model.Bsn_User;
 import com.web.innjoy.model.Ij_User;
+import com.web.innjoy.model.Reservation;
 import com.web.innjoy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -87,7 +89,12 @@ public class UserRestController {
     	System.out.println("UserRestController : join_bsn 호출됨");
     	return ResponseEntity.ok(userService.joinBsn(buser));
     }
-
+    // 예약 상세내역
+    @PostMapping("read/resDetail")
+    public ResponseEntity<ReservationDto> viewResDetail(@RequestParam int resId) {
+    	System.out.println("UserRestController : viewResDetail 호출됨");
+    	return ResponseEntity.ok(userService.getResDetail(resId));
+    }
     // 회원정보 수정 - 일반
     @PutMapping("/sec/try/update")
     public ResponseEntity<Ij_User> update(@RequestBody Ij_User user) {
@@ -99,6 +106,12 @@ public class UserRestController {
     public ResponseEntity<Ij_User> updateBsn(@RequestBody Bsn_User user) {
     	userService.updateBsn(user);
     	return ResponseEntity.noContent().build();
+    }
+    // 예약하기
+    @PostMapping("/sec/try/reservation")
+    public ResponseEntity<Reservation> reservation(@RequestBody Reservation res){
+    	System.out.println("UserRestController : reservation 호출됨");
+        return ResponseEntity.ok(userService.reservation(res));
     }
     
     // 아이디 찾기
