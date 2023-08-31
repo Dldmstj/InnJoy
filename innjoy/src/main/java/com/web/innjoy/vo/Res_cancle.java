@@ -4,12 +4,12 @@ public class Res_cancle {
 	private int cancle_id;
 	private int reservation_id;
 	private String cancle_reason;
-
+	
 	public Res_cancle() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Res_cancle(int cancle_id, int reservation_id, String cancle_reason) {
 		super();
 		this.cancle_id = cancle_id;
@@ -34,6 +34,6 @@ public class Res_cancle {
 	public void setCancle_reason(String cancle_reason) {
 		this.cancle_reason = cancle_reason;
 	}
-
-
+	
+	
 }

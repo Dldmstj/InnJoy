@@ -12,17 +12,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import lombok.Data;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
-@Data
 @Entity
 @Table(name="RECOMM_COMM")
 public class Recomm_comm {
 	
 	@Id
 	@Column(name="rc_com_id", unique=true)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_rc_com_id_generator")
-	@SequenceGenerator(name = "seq_rc_com_id_generator", sequenceName = "seq_rc_com_id", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rc_com_id_seq_generator")
+	@SequenceGenerator(name = "rc_com_id_seq_generator", sequenceName = "rc_com_id_seq", allocationSize = 1)
 	private int rcComId;
 	
 	@ManyToOne	// many comments, one recomm
@@ -36,10 +36,60 @@ public class Recomm_comm {
 	@Column(name="rc_com_det")
 	private String rcComDet;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="rc_com_time")
 	private Date rcComTime;
 	
 	// 생성자
 	public Recomm_comm() {}
-	 
+
+	public Recomm_comm(int rcComId, Recomm recomm, Ij_User ijUser, String rcComDet, Date rcComTime) {
+		this.rcComId = rcComId;
+		this.recomm = recomm;
+		this.ijUser = ijUser;
+		this.rcComDet = rcComDet;
+		this.rcComTime = rcComTime;
+	}
+
+	// getter, setter
+	public int getRcComId() {
+		return rcComId;
+	}
+
+	public void setRcComId(int rcComId) {
+		this.rcComId = rcComId;
+	}
+
+	public Recomm getRecomm() {
+		return recomm;
+	}
+
+	public void setRecomm(Recomm recomm) {
+		this.recomm = recomm;
+	}
+
+	public Ij_User getIjUser() {
+		return ijUser;
+	}
+
+	public void setIjUser(Ij_User ijUser) {
+		this.ijUser = ijUser;
+	}
+
+	public String getRcComDet() {
+		return rcComDet;
+	}
+
+	public void setRcComDet(String rcComDet) {
+		this.rcComDet = rcComDet;
+	}
+
+	public Date getRcComTime() {
+		return rcComTime;
+	}
+
+	public void setRcComTime(Date rcComTime) {
+		this.rcComTime = rcComTime;
+	}
+
 }

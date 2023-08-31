@@ -67,5 +67,5 @@ public class Recomm {
 		public void setReservation_id(int reservation_id) {
 			this.reservation_id = reservation_id;
 		}
-
+		
 }

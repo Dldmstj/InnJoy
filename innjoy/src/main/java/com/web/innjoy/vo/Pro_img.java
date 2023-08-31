@@ -7,12 +7,12 @@ public class Pro_img {
 	private int pro_id;
 	private String fname;
 	private Date updte;
-
+	
 	public Pro_img() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Pro_img(int no, int pro_id, String fname, Date updte) {
 		super();
 		this.no = no;

@@ -2,8 +2,6 @@ package com.web.innjoy.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -39,6 +37,7 @@ public class Bsn_User {
 	@OneToMany(mappedBy = "bsnUser")		//  one bsn, many products
 	private List<Product> product;
 
+	// 생성자
 	public Bsn_User() {}
 	
 	public Bsn_User(String bsnId, String bsnPass, String bsnName, String bsnNumber, String ceoName, String bsnPhone,
@@ -53,6 +52,7 @@ public class Bsn_User {
 		this.product = product;
 	}
 
+	// getter, setter
 	public String getBsnId() {
 		return bsnId;
 	}

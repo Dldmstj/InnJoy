@@ -14,7 +14,10 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="meta description">
-
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=sbudeobyvn&submodules=geocoder"></script>
 
 <!-- fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,20 +72,28 @@ input[type=radio]:checked+label {
 .joinForm {
 	padding-top: 20px;
 }
+#textArea{
+	height: 10rem;
+	resize: none;
+}
+#detail {
+	height: 17rem;
+	resize: none;
+}
 </style>
 
-<script type="text/javascript">
-	var uptModal = document.getElementById('uptModal')
-	var myInput = document.getElementById('myInput')
-
-	uptModal.addEventListener('shown.bs.modal', function() {
-		myInput.focus()
-	})
-</script>
 <%@include file="../header/user_header.jsp"%>
 </head>
 
 <body>
+<script type="text/javascript">
+/* 	var uptModal = document.getElementById('uptModal')
+	var myInput = document.getElementById('myInput')
+
+	uptModal.addEventListener('shown.bs.modal', function() {
+		myInput.focus()
+	}) */
+</script>
 	<div class="container">
 
 		<!-- Outer Row -->
@@ -152,15 +163,18 @@ input[type=radio]:checked+label {
 												</div>
 											</div>
 											<!-- Product actions-->
-											<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+											<div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
 												<div class="text-center">
 													<a class="btn btn-outline-dark mt-auto" onclick="viewDetail(${reservation.reservationId})"
 														data-bs-toggle="modal" data-bs-target="#reservationInfo">예약정보</a>
+ 													<a class="btn btn-outline-dark mt-auto"  onclick="viewDetail(${reservation.reservationId})"
+														data-bs-toggle="modal" data-bs-target="#reviewModal" id="reviewBtn">후기작성</a>
+ 													<a class="btn btn-outline-dark mt-auto"  onclick="viewDetail(${reservation.reservationId})"
+														data-bs-toggle="modal" data-bs-target="#recommModal" id="recommBtn">게시물작성</a>
 												</div>
 											</div>
 										</div>
 									</div>
-
 								</c:forEach>
 							</div>
 						</div>
@@ -446,12 +460,29 @@ input[type=radio]:checked+label {
 					var rsJson = JSON.parse(rs);	
 					var resDate = rsJson.startDt +" ~ "+rsJson.endDt
 					$("#proName").val(rsJson.proName);
+					$("#proName2").val(rsJson.proName);
+					$("#proName3").text(rsJson.proName);
+					$("#reservationId").val(rsJson.reservationId);
+					$("#reservationId2").val(rsJson.reservationId);
+					$("#roomId").val(rsJson.roomId);
 					$("#roomName").val(rsJson.roomName);
+					$("#roomName2").val(rsJson.roomName);
 					$("#resDate").val(resDate);
+					$("#resDate2").val(resDate);
 					$("#resName").val(rsJson.userName);
 					$("#resPhone").val(rsJson.userPhone);
-					$("#status").val(rsJson.status);
-					$("#payment").val(rsJson.payment);
+					$("#payment").val(rsJson.payment+"원");
+					if(rsJson.status == 0) {
+						$("#status").val("예약문의");
+					}else if(rsJson.status == 1){
+						$("#status").val("예약확정");
+					}else if(rsJson.status == 2){
+						$("#status").val("취소된 예약입니다.");
+					}else if(rsJson.status == 3){
+						$("#status").val("사업자측에서 취소한 예약입니다.");
+					}else if(rsJson.status == 4){
+						$("#status").val("이용완료");
+					}
 				},
 				error : function(err) {
 					console.log(err)
@@ -520,6 +551,315 @@ input[type=radio]:checked+label {
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function wirteReview(){
+		    var formData = new FormData($('#reviewFrm')[0]);
+		    $.ajax({
+		      type: "POST",
+		      url: "/try/write/review",
+		      data: formData,
+		      processData: false,
+		      contentType: false,
+		      success: function (rs) {
+		        // 서버에서 반환한 응답을 처리
+		        if (rs == "Y") {
+		          alert("후기 작성이 완료되었습니다.");
+		          location.href = "/sec/mypage";
+		        } else {
+		          alert("작성 실패");
+		        }
+		      },
+		      error: function (err) {
+		        console.log(err);
+		        alert("error: 관리자에게 문의해주세요.");
+		      }
+		    })
+	   }
+	</script>
+	<!--  후기 작성 modal -->
+	<div class="modal fade" id="reviewModal" tabindex="-1"
+		aria-labelledby="reviewFormModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">후기 작성하기</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<!-- Outer Row -->
+						<div class="row justify-content-center">
+							<div class="col-xl-12 col-lg-12 col-md-9" id="joinBox">
+								<div class="card o-hidden border-0 my-5">
+									<div class="card-body p-0">
+										<div class="pl-5 pr-5">
+											<form method="post" enctype="multipart/form-data" id="reviewFrm">
+											<input type="hidden" id="reservationId" name="reservationId" value=""/>
+											<input type="hidden" id="roomId" name="roomId" value=""/>
+											<div class="form-group">
+												<label>숙소명</label> <input type="text"
+													class="form-control form-control-user" id="proName2"
+													value="" readonly>
+											</div>
+											<div class="form-group">
+												<label>객실명</label> <input type="text"
+													class="form-control form-control-user" id="roomName2"
+													value="" readonly>
+											</div>
+											<div class="form-group">
+												<label>예약일자</label> <input type="text"
+													class="form-control form-control-user" id="resDate2"
+													value="" readonly>
+											</div>
+											<div class="form-group">
+											<label>평점</label>
+												<select class="form-select" aria-label="Default select example" name="star">
+												  <option selected>선택</option>
+												  <option value="5">5</option>
+												  <option value="4">4</option>
+												  <option value="3">3</option>
+												  <option value="2">2</option>
+												  <option value="1">1</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>후기 내용</label>
+												<textarea class="form-control form-control-user"  id="textArea" name="reviewDet"></textarea>
+											</div>
+											<div class="form-group">
+												<label>사진첨부</label>
+												<input type="file" class="form-control form-control-user" id="img" name="report" multiple="multiple">
+											</div>
+											<div class="form-group"></div>
+											<button type="button" onclick="wirteReview()"
+													class="btn btn-outline-success btn-block mt-5" id="modBtn">후기 작성</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--  게시물 작성 modal -->
+	<div class="modal fade" id="recommModal" tabindex="-1"
+		aria-labelledby="reviewFormModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">추천 게시물 작성하기</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+		<!-- Outer Row -->
+		<div class="row justify-content-center">
+
+			<div class="col-xl-12 col-lg-12 col-lg-9 col-mt-10" id="boardForm">
+				<div class="card o-hidden border-0 shadow-sm my-5">
+					<div class="card-body p-4 justify-content-center">
+						<form method="post" enctype="multipart/form-data" id="RecommFrm">
+							<input type="hidden" id="reservationId2" name="reservationId" value="" />
+							<div class="form-group">
+								<div
+									class="card o-hidden m-3 border-0 shadow-sm my-5 rounded-pill">
+									<div class="ml-5 mt-4 mb-3">
+										<h3 class="justify-content-center" id="proName3">숙소명</h3>
+									</div>
+								</div>
+							</div>
+							<div class="form-group p-0 d-flex justify-content-center">
+								<div>
+									<label>유형</label>
+									<select class="form-select" aria-label="Default select example" name="recommType">
+										<option selected>선택</option>
+										<option value="맛집">맛집</option>
+										<option value="관광명소">관광명소</option>
+										<option value="사진명소">사진명소</option>
+									</select>
+								</div>
+								<div class="pl-2 pr-5 w-75">
+									<label>제목</label> <input type="text"
+										class="form-control form-control-user" id="title" name="title"
+										value="" placeholder="제목을 입력하세요.">
+								</div>
+							</div>
+
+							<div class="pl-5 ml-1 d-flex w-50 justify-content-center">
+								<input type="text" class="form-control form-control-user w-75"
+									id="search" placeholder="위치를 입력하세요."> 
+								<input type="button" class="btn btn-outline-success ml-3"
+									id="searchBtn" value="검색">
+							</div>
+							<div class="pt-2 pb-2 ml-3 d-flex w-50 justify-content-center">
+								<input type="text" class="form-control form-control-user w-75" id="address" value="" readonly/>
+							</div>
+							<div class="pl-5 pr-5 pb-5 pt-2 d-flex justify-content-center">
+								<br>
+								<div id="map" style="width: 50%; height: 400px;"></div>
+								<div class="d-block">
+									<input type="hidden" id="recomLoc" name="recomLoc" value="" />
+									<input type="hidden" id="latitude" name="latitude" value="" />
+									<input type="hidden" id="longitude" name="longitude" value="" />
+								</div>
+
+								<div class="pl-5 pr-5">
+
+									<input type="hidden" id="reservationId" name="reservationId"
+										value="" /> <input type="hidden" id="roomId" name="roomId"
+										value="" />
+
+									<div class="form-group">
+										<label>게시물 내용</label>
+										<textarea class="form-control form-control-user" id="detail"
+											name="detail"></textarea>
+									</div>
+									<div class="form-group">
+										<label>사진첨부</label> <input type="file"
+											class="form-control form-control-user" id="img" name="report"
+											multiple="multiple">
+									</div>
+									<div class="form-group"></div>
+									<button type="button" onclick="wirteRecomm()"
+										class="btn btn-outline-success btn-block mt-5" id="modBtn">게시물 작성</button>
+								</div>
+								<script type="text/javascript">
+									//지도를 그려주는 함수 실행
+									selectMapList();
+
+									//검색한 주소의 정보를 insertAddress 함수로 넘겨준다.
+									function searchAddressToCoordinate(search) {
+										naver.maps.Service.geocode({
+															query : search
+										},
+										function(status, response) {
+											if (status === naver.maps.Service.Status.ERROR) {
+												return alert('Something Wrong!');
+											}
+											if (response.v2.meta.totalCount === 0) {
+												return alert('올바른 주소를 입력해주세요.');
+											}
+											var htmlAddresses = [], item = response.v2.addresses[0], point = new naver.maps.Point(item.x,item.y);
+											if (item.roadAddress) {
+												htmlAddresses.push('[도로명 주소] '+ item.roadAddress);
+											}
+											if (item.jibunAddress) {
+												htmlAddresses.push('[지번 주소] '+ item.jibunAddress);
+											}
+											if (item.englishAddress) {
+												htmlAddresses.push('[영문명 주소] '+ item.englishAddress);
+											}
+											insertAddress(
+												item.roadAddress,item.x,item.y);
+										});
+									}
+									// 주소 검색
+									$('#address').on('keydown',function(e) {
+										var keyCode = e.which;
+										if (keyCode === 13) { // Enter Key
+											searchAddressToCoordinate($('#search').val());
+										}
+									});
+									$('#searchBtn').on('click',function(e) {
+										e.preventDefault();
+										searchAddressToCoordinate($('#search').val());
+									});
+									naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
+
+									//검색된 정보를 input box에 할당하고, 지도에 핀 찍는 함수
+									function insertAddress(address, latitude,longitude) {
+										$('#address').val(address);
+										$('#recomLoc').val(address);
+										$('#latitude').val(latitude);
+										$('#longitude').val(longitude);
+
+										var map = new naver.maps.Map('map', {
+											center : new naver.maps.LatLng(
+													longitude, latitude),
+											zoom : 14
+										});
+										var marker = new naver.maps.Marker({
+											map : map,
+											position : new naver.maps.LatLng(
+													longitude, latitude),
+										});
+									}
+
+									//지도를 그려주는 함수
+									function selectMapList() {
+
+										var map = new naver.maps.Map('map', {
+											center : new naver.maps.LatLng(
+													37.3595704, 127.105399),
+											zoom : 10
+										});
+									}
+
+									// 지도를 이동하게 해주는 함수
+									function moveMap(len, lat) {
+										var mapOptions = {
+											center : new naver.maps.LatLng(len,
+													lat),
+											zoom : 15,
+											mapTypeControl : true
+										};
+										var map = new naver.maps.Map('map',
+												mapOptions);
+										var marker = new naver.maps.Marker({
+											position : new naver.maps.LatLng(
+													len, lat),
+											map : map
+										});
+									}
+									function wirteRecomm(){
+									    var formData = new FormData($('#RecommFrm')[0]);
+									    $.ajax({
+									      type: "POST",
+									      url: "/try/write/recomm",
+									      data: formData,
+									      processData: false,
+									      contentType: false,
+									      success: function (rs) {
+									        // 서버에서 반환한 응답을 처리
+									        if (rs == "Y") {
+									          alert("게시물 작성이 완료되었습니다.");
+									          location.href = "/sec/mypage";
+									        } else {
+									          alert("작성 실패");
+									        }
+									      },
+									      error: function (err) {
+									        console.log(err);
+									        alert("error: 관리자에게 문의해주세요.");
+									      }
+									    })
+								   }
+								</script>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"

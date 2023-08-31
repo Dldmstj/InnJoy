@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.web.innjoy.model.Bsn_User;
-import com.web.innjoy.model.Ij_User;
 
 import jakarta.transaction.Transactional;
 

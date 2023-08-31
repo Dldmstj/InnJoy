@@ -77,7 +77,7 @@ public class UserService{
     			res.getIjUser().getUserName(),
     			res.getIjUser().getUserPhone(),
     			res.getRoom().getProduct().getProName(),
-//    			res.getRoom().getProduct().getProLoc(),
+    			res.getRoom().getRoomId(),
     			res.getRoom().getRoomName(),
     			res.getUserCnt(),
     			res.getStartDt(),

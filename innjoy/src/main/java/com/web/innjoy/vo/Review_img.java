@@ -7,7 +7,7 @@ public class Review_img {
 	private String fname;
 	private Date updte;
 	private int review_id;
-
+	
 	public Review_img() {
 		super();
 		// TODO Auto-generated constructor stub

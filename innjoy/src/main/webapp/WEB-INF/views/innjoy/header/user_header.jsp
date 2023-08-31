@@ -131,7 +131,7 @@
                                         <path opacity="0.4" d="M1 0.5V8.5" stroke="#FEFEFE" stroke-linecap="round" />
                                     </svg>
                                 </span>
-                                <a class="announcement-login announcement-text text-white" href="/mypage">
+                                <a class="announcement-login announcement-text text-white" href="/sec/mypage">
                                     <span>MyPage</span>
                                 </a>
                                 <span class="separator-login d-flex px-3">
@@ -140,7 +140,7 @@
                                         <path opacity="0.4" d="M1 0.5V8.5" stroke="#FEFEFE" stroke-linecap="round" />
                                     </svg>
                                 </span>
-                                <a class="announcement-login announcement-text text-white" href="/mypage">
+                                <a class="announcement-login announcement-text text-white" href="/sec/mypage">
                                     <span>${ij_user.userName} 님</span>
                                 </a>
                             </div>

@@ -50,5 +50,5 @@ public class recomm_comm {
 	public void setRc_com_time(Date rc_com_time) {
 		this.rc_com_time = rc_com_time;
 	}
-
+	
 }

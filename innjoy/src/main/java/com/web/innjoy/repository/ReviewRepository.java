@@ -9,6 +9,6 @@ import com.web.innjoy.model.Review;
 
 public interface ReviewRepository extends JpaRepository<Review, Integer>{
 	
+	// 리뷰 리스트
 	List<Review> findByReservation(Reservation res);
-	
 }

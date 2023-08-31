@@ -7,7 +7,7 @@
 	<resultMap type ="ProRoom" id = "pr">
 		<association property="product" javaType="Product">
 			<id column="pro_id" property="pro_id"/>
-			<result column="bns_id" property="bns_id"/>
+			<result column="bsn_id" property="bsn_id"/>
 			<result column="pro_type_id" property="pro_type_id"/>
 			<result column="pro_name" property="pro_name"/>
 			<result column="pro_loc" property="pro_loc"/>
@@ -29,11 +29,55 @@
 		</association>
 	</resultMap>
 
-	<select id="getRoomsByBsnId" resultMap="pr">
-		SELECT p.PRO_NAME || ' - ' || m.ROOM_NAME AS roomList
+	<select id="bsn_res" resultMap="pr">
+		SELECT p.PRO_NAME, m.ROOM_NAME, m.ROOM_ID
 		FROM room m
 		INNER JOIN PRODUCT p ON p.pro_id = m.pro_id
 		WHERE p.bsn_id = #{bsn_id}
 	</select>
 	
+    <select id="calList" parameterType="Integer" resultType="Reservation">
+	    SELECT
+	        reservation_id, user_id, room_id,
+	        user_cnt, start_dt, end_dt,
+	        payment, status
+	    FROM RESERVATION
+	    <where>
+	        <if test="room_id != null">
+	            AND ROOM_ID = #{room_id}
+	        </if>
+	    </where>
+    </select>
+    
+   	<resultMap type ="ResUser" id = "ru">
+		<association property="user" javaType="User">
+			<id column="user_id" property="user_id"/>
+			<result column="user_pass" property="user_pass"/>
+			<result column="user_name" property="user_name"/>
+			<result column="user_phone" property="user_phone"/>
+			<result column="email" property="email"/>
+			<result column="n_name" property="n_name"/>
+			<result column="auth" property="auth"/>
+		</association>
+		<association property="reservation" javaType="Reservation">
+			<id column="reservation_id" property="reservation_id"/>
+			<result column="user_id" property="user_id"/>
+			<result column="room_id" property="room_id"/>
+			<result column="user_cnt" property="user_cnt"/>
+			<result column="start_dt" property="start_dt"/>
+			<result column="end_dt" property="end_dt"/>
+			<result column="payment" property="payment"/>
+			<result column="status" property="status"/>
+		</association>
+	</resultMap> 
+ 	<select id="resDetModal" resultMap="ru">
+		SELECT
+		    r.status, r.start_dt,r.end_dt,
+		    r.user_cnt,r.payment,
+		    u.user_name, u.user_phone, u.user_id
+		FROM reservation r
+		JOIN ij_user u ON r.user_id = u.user_id
+		WHERE r.reservation_id = #{reservation_id}
+	</select>   
+ 
 </mapper>

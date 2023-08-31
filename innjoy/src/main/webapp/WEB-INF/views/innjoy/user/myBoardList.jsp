@@ -79,7 +79,7 @@ a.list-group-item{
 	border: none;
 }
 
-#delBtn{
+#uptBtn, #delBtn{
 	width: 80px !important;
 }
 
@@ -96,15 +96,6 @@ a.list-group-item{
 	height: 86px !important;
 }
 </style>
-
-<script type="text/javascript">
-	var uptModel = document.getElementById('uptModel')
-	var myInput = document.getElementById('myInput')
-
-	uptModel.addEventListener('shown.bs.modal', function() {
-		myInput.focus()
-	})
-</script>
 <%@include file="../header/user_header.jsp"%>
 </head>
 
@@ -145,8 +136,9 @@ a.list-group-item{
 										</a>
 										<!-- Product actions-->
 										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-											<div class="text-center pt-2">
-												<a id="delBtn" class="btn btn-outline-success mt-auto" href="#">삭제</a>
+											<div class="text-center pt-2 d-flex">
+												<a id="uptBtn" class="btn btn-outline-success mt-auto" href="#">수정</a>
+												<a id="delBtn" class="btn btn-outline-warning mt-auto" onclick="deleteReview(${rlist.review.reviewId})">삭제</a>
 											</div>
 										</div>
 									</div>
@@ -155,6 +147,31 @@ a.list-group-item{
 							</div>
 						</div>
 				</div>
+				<script type="text/javascript">
+					function deleteReview(reviewId){
+						if(confirm("후기를 삭제하시겠습니까?")) {
+							$.ajax({
+								type : "delete",
+								url : "/try/delete/review",
+								data : "reviewId=" +reviewId,
+								dataType : "text",
+								success : function(rs) {
+									if (rs == "success") {
+										alert("후기를 삭제하였습니다.")
+									} else if (rs == "fail"){
+										alert("삭제 실패. 관리자에게 문의하세요.")
+										location.href = "/sec/myboardlist"
+									} else {
+										alert("error: 관리자에게 문의하세요.")
+									}
+								},
+								error : function(err) {
+								console.log(err)
+								}
+							})
+						}
+					}
+				</script>
 				<div class="tab-pane fade" id="nav-board" role="tabpanel" aria-labelledby="nav-board-tab">
 					<div class="container px-4 px-lg-5">
 							<div class="row justify-content-center">
@@ -173,9 +190,10 @@ a.list-group-item{
 										    <p class="mb-1">${recomm.detail}</p>
 										</a>
 										<!-- Product actions-->
-										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-											<div class="text-center pt-2">
-												<a id="delBtn" class="btn btn-outline-success mt-auto" href="#">삭제</a>
+										<div class="card-footer p-4 pt-0  border-top-0 bg-transparent">
+											<div class="text-center pt-2 d-flex">
+												<a id="delBtn" class="btn btn-outline-success mt-auto" href="#">수정</a>
+												<a id="delBtn" class="btn btn-outline-warning mt-auto" onclick="deleteRecomm(${recomm.recomId})">삭제</a>
 											</div>
 										</div>
 									</div>
@@ -185,6 +203,31 @@ a.list-group-item{
 							</div>
 						</div>
 				</div>
+				<script type="text/javascript">
+					function deleteRecomm(recommId){
+						if(confirm("게시물을 삭제하시겠습니까?")) {
+							$.ajax({
+								type : "delete",
+								url : "/try/delete/recomm",
+								data : "recommId=" +recommId,
+								dataType : "text",
+								success : function(rs) {
+									if (rs == "success") {
+										alert("게시물을 삭제하였습니다.")
+									} else if (rs == "fail"){
+										alert("삭제 실패. 관리자에게 문의하세요.")
+										location.href = "/sec/myboardlist"
+									} else {
+										alert("error: 관리자에게 문의하세요.")
+									}
+								},
+								error : function(err) {
+								console.log(err)
+								}
+							})
+						}
+					}
+				</script>
 				<div class="tab-pane fade" id="nav-reple" role="tabpanel" aria-labelledby="nav-reple-tab">
 					<div class="container px-4 px-lg-5">
 							<div class="row justify-content-center">
@@ -202,7 +245,7 @@ a.list-group-item{
 										<!-- Product actions-->
 										<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 											<div class="text-center pt-2">
-												<a id="delBtn" class="btn btn-outline-success mt-auto" href="#">삭제</a>
+												<a id="delBtn" class="btn btn-outline-success mt-auto" onclick="deleteComm(${comment.rcComId})">삭제</a>
 											</div>
 										</div>
 									</div>
@@ -211,9 +254,33 @@ a.list-group-item{
 								</div>
 							</div>
 						</div>
+				<script type="text/javascript">
+					function deleteComm(commId){
+						if(confirm("댓글을 삭제하시겠습니까?")) {
+							$.ajax({
+								type : "delete",
+								url : "/try/delete/comm",
+								data : "commId=" +commId,
+								dataType : "text",
+								success : function(rs) {
+									if (rs == "success") {
+										alert("댓글을 삭제하였습니다.")
+									} else if (rs == "fail"){
+										alert("삭제 실패. 관리자에게 문의하세요.")
+										location.href = "/sec/myboardlist"
+									} else {
+										alert("error: 관리자에게 문의하세요.")
+									}
+								},
+								error : function(err) {
+								console.log(err)
+								}
+							})
+						}
+					}
+				</script>
 				</div>
 			</div>
-		</div>
 <%@ include file="../header/footer.jsp" %>  
 </body>
 </html>

@@ -11,12 +11,12 @@ public class Report {
 	private String report_det;
 	private String url;
 	private Date rep_time;
-
+	
 	public Report() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Report(int report_id, int review_id, int recom_id, int rc_com_id, String report_type, String report_det,
 			String url, Date rep_time) {
 		super();
@@ -77,5 +77,5 @@ public class Report {
 	public void setRep_time(Date rep_time) {
 		this.rep_time = rep_time;
 	}
-
+	
 }

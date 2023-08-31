@@ -3,12 +3,12 @@ package com.web.innjoy.vo;
 public class Pro_type_id {
 	private int pro_type_id;
 	private String pro_type;
-
+	
 	public Pro_type_id() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Pro_type_id(int pro_type_id, String pro_type) {
 		super();
 		this.pro_type_id = pro_type_id;

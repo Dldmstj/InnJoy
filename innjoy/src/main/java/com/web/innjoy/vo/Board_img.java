@@ -7,7 +7,7 @@ public class Board_img {
 	private String fname;
 	private Date updte;
 	private int recom_id ;
-
+	
 	public Board_img() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -52,5 +52,5 @@ public class Board_img {
 	public void setRecom_id(int recom_id) {
 		this.recom_id = recom_id;
 	}
-
+	
 }

@@ -3,12 +3,12 @@ package com.web.innjoy.vo;
 public class Admin {
 	private String adm_id;
 	private String adm_pass;
-
+	
 	public Admin() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Admin(String adm_id, String adm_pass) {
 		super();
 		this.adm_id = adm_id;
@@ -26,5 +26,5 @@ public class Admin {
 	public void setAdm_pass(String adm_pass) {
 		this.adm_pass = adm_pass;
 	}
-
+	
 }

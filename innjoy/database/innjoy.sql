@@ -1,6 +1,9 @@
 CREATE TABLE board(
 
 );
+ALTER TABLE recomm ADD (recommType VARCHAR2(100));
+ALTER TABLE recomm ADD (latitude NUMBER(10, 6));
+ALTER TABLE recomm ADD (longitude number(10, 6));
 
 CREATE SEQUENCE _seq;
 
@@ -61,6 +64,12 @@ WHERE  u.user_id = 'dmstj333';
 
 
 SELECT * FROM RESERVATION;
+
+SELECT * FROM review;
+SELECT * FROM REVIEW_IMG;
+
+DELETE FROM review_img WHERE REVIEW_ID =103;
+DELETE FROM review WHERE RESERVATION_ID =11;
 
 -- 후기
 CREATE SEQUENCE review_seq

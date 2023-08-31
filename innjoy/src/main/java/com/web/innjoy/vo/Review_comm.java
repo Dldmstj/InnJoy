@@ -7,12 +7,12 @@ public class Review_comm {
 	private int review_id;
 	private String rv_com_det;
 	private Date rv_com_time;
-
+	
 	public Review_comm() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Review_comm(int rv_com_id, int review_id, String rv_com_det, Date rv_com_time) {
 		super();
 		this.rv_com_id = rv_com_id;
@@ -44,5 +44,5 @@ public class Review_comm {
 	public void setRv_com_time(Date rv_com_time) {
 		this.rv_com_time = rv_com_time;
 	}
-
+	
 }

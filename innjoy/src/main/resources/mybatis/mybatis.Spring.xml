@@ -6,6 +6,14 @@
 		<typeAlias alias="product" type="com.web.innjoy.vo.Product"/>
 		<typeAlias alias="room" type="com.web.innjoy.vo.Room"/>
 		<typeAlias alias="bsn_user" type="com.web.innjoy.vo.Bsn_user"/>
-		<typeAlias alias="ProRoom" type="com.web.innjoy.vo.ProRoom"/>
+		<typeAlias alias="ProRoom" type="com.web.innjoy.vo.ProRoom"/> <!-- 추가된 것 -->
+		<typeAlias alias="reservation" type="com.web.innjoy.vo.Reservation"/>
+		<typeAlias alias="res_cancle" type="com.web.innjoy.vo.Res_cancle"/>
+		<typeAlias alias="user" type="com.web.innjoy.vo.User"/>
+		<typeAlias alias="resUser" type="com.web.innjoy.vo.ResUser"/> <!-- 추가된 것 -->
+		
+		<typeAlias alias="productsch" type="com.web.innjoy.vo.ProductSch"/>
+		<typeAlias alias="bsnreviewmng" type="com.web.innjoy.vo.BsnReviewMng"/>	
+		<typeAlias alias="review" type="com.web.innjoy.vo.Review"/>	
 	</typeAliases>
 </configuration>

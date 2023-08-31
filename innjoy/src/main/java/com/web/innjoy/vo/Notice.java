@@ -9,7 +9,7 @@ public class Notice {
 	private String not_detail;
 	private Date not_date;
 	private int not_readcnt;
-
+	
 	public Notice() {
 		super();
 		// TODO Auto-generated constructor stub

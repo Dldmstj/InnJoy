@@ -52,18 +52,12 @@ public class UserController {
     	HttpSession session = request.getSession();
 	    String userId = (String) session.getAttribute("userId");
 	    Ij_User user = (Ij_User) session.getAttribute("ij_user");
-//	     model : user객체
+	     // model : user객체
 	    Ij_User ij = userService.getProfile(userId);
 	    model.addAttribute("userInfo", ij);
 	    // model : 나의 예약 리스트
 	    List<Reservation> rlist = userService.getMyResList(user);
 	    model.addAttribute("rlist", rlist);	// model : reservation List
-	    // model : 예약 상세정보
-//	    for(Reservation res: rlist) {
-//	    	int resId = res.getReservationId(); 
-//	    	res= userService.getResDetail(resId);
-//	    	model.addAttribute("reservation", res);
-//	    }
 		return "user/myPage";
 	}
     
@@ -89,10 +83,16 @@ public class UserController {
 		return "user/product_reservation";
 	}
 	
-	// 예약내역 상세보기
+	// 예약 상세보기
 	@RequestMapping("product_detail")
 	public String product_detail() {
 		return "user/product_detail";
+	}
+	
+	// 게시물 작성하기
+	@RequestMapping("sec/boardForm")
+	public String boardForm() {
+		return "user/boardForm";
 	}
 
 }

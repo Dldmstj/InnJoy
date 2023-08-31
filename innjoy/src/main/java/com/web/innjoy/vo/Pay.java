@@ -8,12 +8,12 @@ public class Pay {
 	private int pay_price;
 	private String pay_type;
 	private Date pay_time;
-
+	
 	public Pay() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Pay(int pay_id, int reservation_id, int pay_price, String pay_type, Date pay_time) {
 		super();
 		this.pay_id = pay_id;
@@ -52,5 +52,5 @@ public class Pay {
 	public void setPay_time(Date pay_time) {
 		this.pay_time = pay_time;
 	}
-
+	
 }

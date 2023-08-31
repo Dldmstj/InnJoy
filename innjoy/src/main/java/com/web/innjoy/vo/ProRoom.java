@@ -1,8 +1,8 @@
 package com.web.innjoy.vo;
 
 public class ProRoom {
-	private Product product;
-	private Room room;
+    private Product product;
+    private Room room;
 	public ProRoom() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -24,7 +24,5 @@ public class ProRoom {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	
-	
-
+    
 }

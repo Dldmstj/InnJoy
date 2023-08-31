@@ -11,7 +11,7 @@ public class Room {
 	private String smoking;
 	private String bed_cnt;
 	private int pro_id;
-
+	
 	public Room() {
 		super();
 		// TODO Auto-generated constructor stub

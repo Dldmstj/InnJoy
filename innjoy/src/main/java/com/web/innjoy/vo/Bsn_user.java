@@ -4,7 +4,7 @@ public class Bsn_user {
 	private String bsn_id;
 	private String bsn_pass;
 	private String bsn_name;
-	private int bsn_number;
+	private String bsn_number;
 	private String ceo_name;
 	private String bsn_phone;
 	private String bsn_email;
@@ -12,8 +12,8 @@ public class Bsn_user {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Bsn_user(String bsn_id, String bsn_pass, String bsn_name, int bsn_number, String ceo_name, String bsn_phone,
-			String bsn_email) {
+	public Bsn_user(String bsn_id, String bsn_pass, String bsn_name, String bsn_number, String ceo_name,
+			String bsn_phone, String bsn_email) {
 		super();
 		this.bsn_id = bsn_id;
 		this.bsn_pass = bsn_pass;
@@ -41,10 +41,10 @@ public class Bsn_user {
 	public void setBsn_name(String bsn_name) {
 		this.bsn_name = bsn_name;
 	}
-	public int getBsn_number() {
+	public String getBsn_number() {
 		return bsn_number;
 	}
-	public void setBsn_number(int bsn_number) {
+	public void setBsn_number(String bsn_number) {
 		this.bsn_number = bsn_number;
 	}
 	public String getCeo_name() {
@@ -65,6 +65,5 @@ public class Bsn_user {
 	public void setBsn_email(String bsn_email) {
 		this.bsn_email = bsn_email;
 	}
-
 
 }

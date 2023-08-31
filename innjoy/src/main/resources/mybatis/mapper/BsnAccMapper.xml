@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >	
+<mapper namespace="com.web.innjoy.dao.ProductDao">
+	
+	<resultMap type ="ProRoom" id = "pr">
+		<association property="product" javaType="Product">
+			<id column="pro_id" property="pro_id"/>
+			<result column="bsn_id" property="bsn_id"/>
+			<result column="pro_type_id" property="pro_type_id"/>
+			<result column="pro_name" property="pro_name"/>
+			<result column="pro_loc" property="pro_loc"/>
+			<result column="basic_info" property="basic_info"/>
+			<result column="res_ann" property="res_ann"/>
+			<result column="ser_conts" property="ser_conts"/>
+		</association>
+		<association property="room" javaType="Room">
+			<id column="room_id" property="room_id"/>
+			<result column="room_name" property="room_name"/>
+			<result column="room_price" property="room_price"/>
+			<result column="checkin" property="checkin"/>
+			<result column="checkout" property="checkout"/>
+			<result column="min_cnt" property="min_cnt"/>
+			<result column="max_cnt" property="max_cnt"/>
+			<result column="smoking" property="smoking"/>
+			<result column="bed_cnt" property="bed_cnt"/>
+			<result column="pro_id" property="pro_id"/>
+		</association>
+	</resultMap>
+	
+	<select id="bsnuser" resultMap="pr">
+		SELECT *
+		FROM product
+		WHERE bsn_id = #{bsn_id}
+	</select>
+	
+	<resultMap type ="BsnReviewMng" id = "brm">
+		<association property="product" javaType="Product">
+			<id column="pro_id" property="pro_id"/>
+			<result column="bsn_id" property="bsn_id"/>
+			<result column="pro_type_id" property="pro_type_id"/>
+			<result column="pro_name" property="pro_name"/>
+			<result column="pro_loc" property="pro_loc"/>
+			<result column="basic_info" property="basic_info"/>
+			<result column="res_ann" property="res_ann"/>
+			<result column="ser_conts" property="ser_conts"/>
+		</association>
+		<association property="room" javaType="Room">
+			<id column="room_id" property="room_id"/>
+			<result column="room_name" property="room_name"/>
+			<result column="room_price" property="room_price"/>
+			<result column="checkin" property="checkin"/>
+			<result column="checkout" property="checkout"/>
+			<result column="min_cnt" property="min_cnt"/>
+			<result column="max_cnt" property="max_cnt"/>
+			<result column="smoking" property="smoking"/>
+			<result column="bed_cnt" property="bed_cnt"/>
+			<result column="pro_id" property="pro_id"/>
+		</association>
+		<association property="review" javaType="Review">
+			<id column="review_id" property="review_id"/>
+			<result column="star" property="star"/>
+			<result column="review_det" property="review_det"/>
+			<result column="rev_time" property="rev_time"/>
+			<result column="rev_photo" property="rev_photo"/>
+			<result column="reservation_id" property="reservation_id"/>
+		</association>
+		<association property="reservation" javaType="Reservation">
+			<id column="reservation_id" property="reservation_id"/>
+			<result column="user_id" property="user_id"/>
+			<result column="room_id" property="room_id"/>
+			<result column="user_cnt" property="user_cnt"/>
+			<result column="start_dt" property="start_dt"/>
+			<result column="end_dt" property="end_dt"/>
+			<result column="payment" property="payment"/>
+			<result column="status" property="status"/>
+		</association>
+	</resultMap>
+	<select id="bsnreview" resultMap="brm">
+		SELECT *
+		FROM RESERVATION rsv
+		JOIN REVIEW rv ON rsv.RESERVATION_ID = rv.RESERVATION_ID
+		JOIN ROOM rm ON rsv.ROOM_ID = rm.ROOM_ID
+		JOIN PRODUCT prod ON rm.PRO_ID = prod.PRO_ID
+		WHERE prod.bsn_id  = #{bsn_id}
+	</select>
+	
+	<!-- 등록된 숙소 리스트 -->
+	<select id="productList" resultType="product"
+		parameterType="productsch">
+		SELECT *
+		FROM product
+		WHERE bsn_id = #{bsn_id}
+	</select>
+	<!-- 숙소의 객실 리스트 -->
+	<select id="roomList" resultType="room"
+		parameterType="room">
+		SELECT *
+		FROM ROOM
+		WHERE pro_id = #{pro_id}
+	</select>
+	<!-- 객실 상세 정보 -->
+	<select id="roomDetail" parameterType="int" 
+						  resultType="room">
+		SELECT *
+		FROM ROOM
+		WHERE room_id = #{room_id}
+	</select>
+	<!-- 후기 리스트 -->
+	<select id="reviewList" resultType="bsnreviewmng"
+		parameterType="bsnreviewmng">
+		SELECT *
+		FROM RESERVATION rsv
+		JOIN REVIEW rv ON rsv.RESERVATION_ID = rv.RESERVATION_ID
+		JOIN ROOM rm ON rsv.ROOM_ID = rm.ROOM_ID
+		JOIN PRODUCT prod ON rm.PRO_ID = prod.PRO_ID
+		
+	</select>
+	<!-- 숙소별 후기 리스트 -->
+	<select id="reviewDetail" resultType="bsnreviewmng"
+		>
+		SELECT *
+		FROM RESERVATION rsv
+		JOIN REVIEW rv ON rsv.RESERVATION_ID = rv.RESERVATION_ID
+		JOIN ROOM rm ON rsv.ROOM_ID = rm.ROOM_ID
+		JOIN PRODUCT prod ON rm.PRO_ID = prod.PRO_ID
+		where prod.pro_id = #{pro_id}
+	</select>
+	
+	
+	
+	
+	<select id="getPro_id" resultType="int">
+    <choose>
+        <when test="pro_type_id == 10000">
+            SELECT pro_id_10000_seq.nextval FROM dual
+        </when>
+        <when test="pro_type_id == 20000">
+            SELECT pro_id_20000_seq.nextval FROM dual
+        </when>
+        <when test="pro_type_id == 30000">
+            SELECT pro_id_30000_seq.nextval FROM dual
+        </when>
+    </choose>
+</select>
+
+
+	<select id="getRoom_id" resultType="int">
+		SELECT room_id_seq.nextval FROM dual	
+	</select>
+	
+	<insert id="insertProduct" parameterType="product">
+    INSERT INTO product (pro_id, pro_type_id, pro_name, pro_loc, basic_info, res_ann, ser_conts)
+    VALUES (
+        <choose>
+            <when test="pro_type_id == 10000">
+                pro_id_10000_seq.nextval, #{pro_type_id}, #{pro_name}, #{pro_loc}, <![CDATA[#{basic_info, jdbcType=CLOB}]]>, <![CDATA[#{res_ann, jdbcType=CLOB}]]>, <![CDATA[#{ser_conts, jdbcType=CLOB}]]>
+            </when>
+            <when test="pro_type_id == 20000">
+                pro_id_20000_seq.nextval, #{pro_type_id}, #{pro_name}, #{pro_loc}, <![CDATA[#{basic_info, jdbcType=CLOB}]]>, <![CDATA[#{res_ann, jdbcType=CLOB}]]>, <![CDATA[#{ser_conts, jdbcType=CLOB}]]>
+            </when>
+            <when test="pro_type_id == 30000">
+                pro_id_30000_seq.nextval, #{pro_type_id}, #{pro_name}, #{pro_loc}, <![CDATA[#{basic_info, jdbcType=CLOB}]]>, <![CDATA[#{res_ann, jdbcType=CLOB}]]>, <![CDATA[#{ser_conts, jdbcType=CLOB}]]>
+            </when>
+        </choose>
+	    )
+	</insert>
+	
+	<insert id="insertRoom" parameterType="room">
+	    INSERT    
+	    INTO room (room_id, room_name, room_price, checkin, checkout, min_cnt, max_cnt, smoking, bed_cnt, pro_id)
+	    VALUES (
+	        <choose>
+	            <when test="pro_type_id == 10000">
+	                room_id_seq.nextval, #{room_name}, #{room_price}, #{checkin}, #{checkout}, #{min_cnt}, #{max_cnt}, #{smoking}, #{bed_cnt}, pro_id_10000_seq.currval
+	            </when>
+	            <when test="pro_type_id == 20000">
+	                room_id_seq.nextval, #{room_name}, #{room_price}, #{checkin}, #{checkout}, #{min_cnt}, #{max_cnt}, #{smoking}, #{bed_cnt}, pro_id_20000_seq.currval
+	            </when>
+	            <when test="pro_type_id == 30000">
+	                room_id_seq.nextval, #{room_name}, #{room_price}, #{checkin}, #{checkout}, #{min_cnt}, #{max_cnt}, #{smoking}, #{bed_cnt}, pro_id_30000_seq.currval
+	            </when>
+	        </choose>
+	    )
+	</insert>
+	<select id="getRoom" parameterType="int" 
+						  resultType="room">
+		SELECT *
+		FROM ROOM
+		WHERE pro_id = #{pro_id}
+	</select>
+
+</mapper>

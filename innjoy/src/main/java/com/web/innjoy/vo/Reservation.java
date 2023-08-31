@@ -5,24 +5,24 @@ import java.util.Date;
 public class Reservation {
 	private int reservation_id;
 	private String user_id;
-	private int pro_id;
+	private int room_id;
 	private int user_cnt;
 	private Date start_dt;
 	private Date end_dt;
 	private int payment;
 	private int status;
-
+	
 	public Reservation() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reservation(int reservation_id, String user_id, int pro_id, int user_cnt, Date start_dt, Date end_dt,
+	public Reservation(int reservation_id, String user_id, int room_id, int user_cnt, Date start_dt, Date end_dt,
 			int payment, int status) {
 		super();
 		this.reservation_id = reservation_id;
 		this.user_id = user_id;
-		this.pro_id = pro_id;
+		this.room_id = room_id;
 		this.user_cnt = user_cnt;
 		this.start_dt = start_dt;
 		this.end_dt = end_dt;
@@ -46,12 +46,12 @@ public class Reservation {
 		this.user_id = user_id;
 	}
 
-	public int getPro_id() {
-		return pro_id;
+	public int getRoom_id() {
+		return room_id;
 	}
 
-	public void setPro_id(int pro_id) {
-		this.pro_id = pro_id;
+	public void setRoom_id(int room_id) {
+		this.room_id = room_id;
 	}
 
 	public int getUser_cnt() {
@@ -94,5 +94,5 @@ public class Reservation {
 		this.status = status;
 	}
 
-
+	
 }
