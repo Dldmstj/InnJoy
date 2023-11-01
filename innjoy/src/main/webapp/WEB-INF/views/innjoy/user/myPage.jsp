@@ -87,12 +87,36 @@ input[type=radio]:checked+label {
 
 <body>
 <script type="text/javascript">
-/* 	var uptModal = document.getElementById('uptModal')
-	var myInput = document.getElementById('myInput')
-
-	uptModal.addEventListener('shown.bs.modal', function() {
-		myInput.focus()
-	}) */
+	$(document).ready(function(){
+		$("#reviewBtn").hide()
+		$("#recommBtn").hide()
+	})
+	
+		// 리뷰 작성 여부 확인
+		function checkReview(resId){
+			console.log("resId: " + resId)
+			$.ajax({
+			      type: "POST",
+			      url: "/check/review",
+			      data: "resId="+resId,
+			      dataType: "text",
+			      success: function (rs) {
+				      var button = document.getElementById('reviewBtn');
+				      console.log(rs) 
+				      if(rs == "true"){
+					      button.disabled = true;
+				      }else{
+					      button.disabled = false;
+				      }
+			      },
+			      error: function (err) {
+			        console.log(err);
+			        alert("error: 관리자에게 문의해주세요.");
+			      }
+			    })
+		}
+	
+	
 </script>
 	<div class="container">
 
@@ -134,7 +158,7 @@ input[type=radio]:checked+label {
 						class="nav-item nav-link" id="nav-wish-tab" data-toggle="tab"
 						href="#nav-wish" role="tab" aria-controls="nav-wish"
 						aria-selected="false">❤️찜</a> <a class="nav-link"
-						href="/myboardlist" aria-controls="nav-contact"
+						href="myboardlist" aria-controls="nav-contact"
 						aria-selected="false">활동내역</a>
 				</div>
 			</nav>
@@ -167,10 +191,6 @@ input[type=radio]:checked+label {
 												<div class="text-center">
 													<a class="btn btn-outline-dark mt-auto" onclick="viewDetail(${reservation.reservationId})"
 														data-bs-toggle="modal" data-bs-target="#reservationInfo">예약정보</a>
- 													<a class="btn btn-outline-dark mt-auto"  onclick="viewDetail(${reservation.reservationId})"
-														data-bs-toggle="modal" data-bs-target="#reviewModal" id="reviewBtn">후기작성</a>
- 													<a class="btn btn-outline-dark mt-auto"  onclick="viewDetail(${reservation.reservationId})"
-														data-bs-toggle="modal" data-bs-target="#recommModal" id="recommBtn">게시물작성</a>
 												</div>
 											</div>
 										</div>
@@ -447,14 +467,16 @@ input[type=radio]:checked+label {
 		</div>
 	</div>
 	<script type="text/javascript">
- 		function viewDetail(id){
-			console.log(id);
+ 		function viewDetail(resId){
+			console.log(resId);
+			var id = resId;
 			$.ajax({
 				type : "post",
 				url : "/read/resDetail",
 				data : "resId="+id,
 				dataType : "text",
 				success : function(rs) {
+					checkReview(id);
 					console.log(rs);
 					// 문자열로 받은 json 데이터 -> json 형태로 parse
 					var rsJson = JSON.parse(rs);	
@@ -482,6 +504,8 @@ input[type=radio]:checked+label {
 						$("#status").val("사업자측에서 취소한 예약입니다.");
 					}else if(rsJson.status == 4){
 						$("#status").val("이용완료");
+						$("#reviewBtn").show()
+						$("#recommBtn").show()
 					}
 				},
 				error : function(err) {
@@ -512,37 +536,37 @@ input[type=radio]:checked+label {
 											<div class="form-group">
 												<label>숙소명</label> <input type="text"
 													class="form-control form-control-user" id="proName"
-													value="">
+													value="" readonly>
 											</div>
 											<div class="form-group">
 												<label>객실명</label> <input type="text"
 													class="form-control form-control-user" id="roomName"
-													value="">
+													value="" readonly>
 											</div>
 											<div class="form-group">
 												<label>예약일자</label> <input type="text"
 													class="form-control form-control-user" id="resDate"
-													value="">
+													value="" readonly>
 											</div>
 											<div class="form-group">
 												<label>예약자명</label> <input type="text"
 													class="form-control form-control-user" id="resName"
-													value="">
+													value="" readonly>
 											</div>
 											<div class="form-group">
 												<label>예약자 연락처</label> <input type="text"
 													class="form-control form-control-user" id="resPhone"
-													value="">
+													value="" readonly>
 											</div>
 											<div class="form-group">
 												<label>예약상태</label> <input type="text"
 													class="form-control form-control-user" id="status"
-													value="">
+													value="" readonly>
 											</div>
 											<div class="form-group">
 												<label>결제금액</label> <input type="text"
 													class="form-control form-control-user" id="payment"
-													value="">
+													value="" readonly>
 											</div>
 											<div class="form-group"></div>
 										</div>
@@ -554,6 +578,10 @@ input[type=radio]:checked+label {
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
+														data-bs-toggle="modal" data-bs-target="#reviewModal" id="reviewBtn">후기 작성</button>
+					<button type="button" class="btn btn-secondary"
+														data-bs-toggle="modal" data-bs-target="#recommModal" id="recommBtn">게시물 작성</button>
+					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">Close</button>
 					
 				</div>
@@ -561,6 +589,7 @@ input[type=radio]:checked+label {
 		</div>
 	</div>
 	<script type="text/javascript">
+		// 리뷰 작성
 		function wirteReview(){
 		    var formData = new FormData($('#reviewFrm')[0]);
 		    $.ajax({

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.web.innjoy.model.Ij_User;
 import com.web.innjoy.model.Recomm_comm;
 import com.web.innjoy.model.Reservation;
+import com.web.innjoy.model.Review;
 import com.web.innjoy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,10 +24,10 @@ public class UserController {
 	private UserService userService;
 
 	// 메인
-	@RequestMapping("main")
-	public String main() {
-		return "user/main";
-	}
+//	@RequestMapping("main")
+//	public String main() {
+//		return "user/main";
+//	}
 
 	// 로그인
 	@RequestMapping("login")
@@ -58,6 +59,9 @@ public class UserController {
 	    // model : 나의 예약 리스트
 	    List<Reservation> rlist = userService.getMyResList(user);
 	    model.addAttribute("rlist", rlist);	// model : reservation List
+//	    // model : 나의 찜 리스트
+//	    List<WishProPimg> wishProList = bsnService.wishProList(userId);
+//	    model.addAttribute("wishProList", wishProList);
 		return "user/myPage";
 	}
     
@@ -83,11 +87,11 @@ public class UserController {
 		return "user/product_reservation";
 	}
 	
-	// 예약 상세보기
-	@RequestMapping("product_detail")
-	public String product_detail() {
-		return "user/product_detail";
-	}
+	// 상품 상세보기
+//	@RequestMapping("product_detail")
+//	public String product_detail() {
+//		return "user/product_detail";
+//	}
 	
 	// 게시물 작성하기
 	@RequestMapping("sec/boardForm")

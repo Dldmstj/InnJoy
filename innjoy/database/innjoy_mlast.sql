@@ -26,7 +26,7 @@ SELECT * FROM recomm WHERE reservation_id=107;
 SELECT * FROM recomm;
 SELECT * FROM board_img;
 
-
+SELECT * FROM reservation;
 
 
 -- 테이블 삭제
@@ -89,3 +89,20 @@ DROP TABLE admin;
 --SELECT * FROM review_img;
 --SELECT * FROM pro_type_id;
 
+SELECT pt.pro_type, p.pro_id, p.pro_name, p.pro_loc, r.room_price
+		FROM pro_type_id pt
+		JOIN product p ON pt.pro_type_id = p.pro_type_id
+		JOIN room r ON p.pro_id = r.pro_id
+		WHERE pt.pro_type_id IS NOT NULL
+		AND p.pro_id IS NOT NULL
+		AND p.pro_name IS NOT NULL
+		AND p.pro_loc IS NOT NULL
+		AND r.room_price IS NOT NULL;
+		AND pi.fname IS NOT NULL;
+	
+SELECT * FROM RECOMM_COMM;
+
+	
+	SELECT * FROM pro_img;
+	SELECT * FROM pro_type_id;
+	SELECT * FROM product;

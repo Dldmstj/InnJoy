@@ -20,6 +20,10 @@ public class Pro_img {
 		this.fname = fname;
 		this.updte = updte;
 	}
+	public Pro_img( int pro_id, String fname) {
+		this.pro_id = pro_id;
+		this.fname = fname;
+	}
 	public int getNo() {
 		return no;
 	}

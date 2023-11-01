@@ -16,6 +16,7 @@ import com.web.innjoy.model.Bsn_User;
 import com.web.innjoy.model.Ij_User;
 import com.web.innjoy.model.Reservation;
 import com.web.innjoy.service.UserService;
+import com.web.innjoy.vo.MailSender;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -111,6 +112,8 @@ public class UserRestController {
     @PostMapping("/sec/try/reservation")
     public ResponseEntity<Reservation> reservation(@RequestBody Reservation res){
     	System.out.println("UserRestController : reservation 호출됨");
+    	System.out.println("reservation id: " + res.getRoomId());
+    	System.out.println("reservation id: " + res.getUserId());
         return ResponseEntity.ok(userService.reservation(res));
     }
     

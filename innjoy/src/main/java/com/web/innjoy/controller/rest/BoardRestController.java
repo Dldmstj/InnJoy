@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.web.innjoy.dto.CommDto;
+import com.web.innjoy.dto.RecommDto;
+import com.web.innjoy.dto.ReviewDto;
 import com.web.innjoy.model.Ij_User;
 import com.web.innjoy.model.Recomm;
 import com.web.innjoy.model.Recomm_comm;
@@ -33,6 +36,20 @@ public class BoardRestController {
 	@Autowired
 	private FileUploadService fileUploadService;
 	
+	// 후기 작성 여부 확인
+	@PostMapping("check/review")
+	public ResponseEntity<String> ckReview(int resId) {
+		String rs = boardService.ckReview(resId);
+		return ResponseEntity.ok(rs);
+	}
+	
+	// 후기 조회
+	@RequestMapping("read/reviewDetail")
+	public ResponseEntity<ReviewDto> reviewDetail(@RequestParam("reviewId") int reviewId){
+		ReviewDto rev = boardService.reviewDetail(reviewId);
+		System.out.println("controller 실행: " + reviewId);
+		return ResponseEntity.ok(rev);
+	}
 	// 후기 작성
 	@PostMapping("try/write/review")
 	public String writeReview(Review review, 
@@ -66,11 +83,14 @@ public class BoardRestController {
 		return ResponseEntity.ok(rs);
 	}
 	// 후기 수정
-	@PutMapping("try/update/review")
-	public ResponseEntity<String> uptReview(@RequestBody Review review){
+	@PostMapping("try/update/review")
+	public ResponseEntity<String> uptReview(Review review, 
+															@RequestPart("report") List<MultipartFile> mfs,
+															Model model){
 		String rs ="";
 		try {
 			boardService.updateReview(review);
+			fileUploadService.updateReviewFile(mfs,review.getReviewId());
 			rs = "success";
 		} catch (Exception e) {
 			System.out.println("updateReview error : "+ e.getMessage());
@@ -79,6 +99,13 @@ public class BoardRestController {
 		return ResponseEntity.ok(rs);
 	}
 	
+	// 게시물 조회
+	@RequestMapping("read/recommDetail")
+	public ResponseEntity<RecommDto> recommDetail(@RequestParam("recommId") int recommId){
+		RecommDto rec = boardService.recommDetail(recommId);
+		System.out.println("controller 실행: " + recommId);
+		return ResponseEntity.ok(rec);
+	}
 	// 게시물 작성
 	@RequestMapping("try/write/recomm")
 	public String writeRecomm(Recomm recomm,
@@ -111,24 +138,39 @@ public class BoardRestController {
 		return ResponseEntity.ok(rs);
 	}
 	// 게시물 수정
-		@PutMapping("try/update/recomm")
-		public ResponseEntity<String> uptRecomm(@RequestBody Recomm recomm){
-			String rs ="";
-			try {
-				boardService.updateRecomm(recomm);
-				rs = "success";
-			} catch (Exception e) {
-				System.out.println("updateRecomm error : "+ e.getMessage());
-				rs = "fail";
-			}
-			return ResponseEntity.ok(rs);
+	@PostMapping("try/update/recomm")
+	public ResponseEntity<String> uptRecomm(Recomm recomm,
+															@RequestPart("report") List<MultipartFile> mfs,
+															Model model){
+		String rs ="";
+		try {
+			boardService.updateRecomm(recomm);
+			fileUploadService.updateRecommFile(mfs,recomm.getRecomId());
+			rs = "success";
+		} catch (Exception e) {
+			System.out.println("updateRecomm error : "+ e.getMessage());
+			rs = "fail";
 		}
+		return ResponseEntity.ok(rs);
+	}
 	
 	// 댓글 작성
-	@RequestMapping("try/write/comm")
-	public ResponseEntity<Recomm_comm> writeComm(Recomm_comm comm){
-		return ResponseEntity.ok(boardService.writeComm(comm));
+	@PostMapping("try/write/comm")
+	public String writeComm(CommDto commDto){
+		System.out.println("댓글 작성 시도");
+		String rs= "";
+		try {
+			// 댓글 작성, 작성한 게시물 객체로 저장
+			Recomm_comm comm = boardService.writeComm(commDto);
+			System.out.println("commId: " +comm.getRcComId());
+	        rs = "Y";
+		} catch (Exception e) {	// 실패시
+			System.out.println("writeCommError: " + e.getMessage());
+			rs = "N";
+		}
+		return rs;
 	}
+	
 	// 댓글 삭제
 	@DeleteMapping("try/delete/comm")
 	public ResponseEntity<String> deleteComm(@RequestParam("commId") int commId){

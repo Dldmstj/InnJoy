@@ -26,12 +26,18 @@ public class Recomm_comm {
 	private int rcComId;
 	
 	@ManyToOne	// many comments, one recomm
-	@JoinColumn(name="recom_id")
+	@JoinColumn(name="recom_id", insertable = false, updatable = false)
 	private Recomm recomm;
 	
+	@Column(name="recom_id")
+	private int recomId;
+	
 	@ManyToOne	// many commets, one user
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="user_id", insertable = false, updatable = false)
 	private Ij_User ijUser;
+	
+	@Column(name="user_id")
+	private String userId;
 	
 	@Column(name="rc_com_det")
 	private String rcComDet;
@@ -42,13 +48,20 @@ public class Recomm_comm {
 	
 	// 생성자
 	public Recomm_comm() {}
-
+	
 	public Recomm_comm(int rcComId, Recomm recomm, Ij_User ijUser, String rcComDet, Date rcComTime) {
 		this.rcComId = rcComId;
 		this.recomm = recomm;
 		this.ijUser = ijUser;
 		this.rcComDet = rcComDet;
 		this.rcComTime = rcComTime;
+	}
+	
+	public Recomm_comm(int recomId, String userId, String rcComDet) {
+		this.recomId = recomId;
+		this.userId = userId;
+		this.rcComTime = new Date();
+		this.rcComDet = rcComDet;
 	}
 
 	// getter, setter
@@ -91,5 +104,22 @@ public class Recomm_comm {
 	public void setRcComTime(Date rcComTime) {
 		this.rcComTime = rcComTime;
 	}
+
+	public int getRecomId() {
+		return recomId;
+	}
+
+	public void setRecomId(int recomId) {
+		this.recomId = recomId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
 
 }

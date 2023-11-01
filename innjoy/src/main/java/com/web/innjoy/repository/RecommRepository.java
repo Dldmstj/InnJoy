@@ -13,7 +13,7 @@ public interface RecommRepository extends JpaRepository<Recomm, Integer>{
 
 	// 나의 게시물 리스트
 	List<Recomm> findByReservation(Reservation res);
-	
+
 	Board_Img save(Board_Img bi);
 	
 }

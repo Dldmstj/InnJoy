@@ -3,17 +3,51 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias alias="product" type="com.web.innjoy.vo.Product"/>
-		<typeAlias alias="room" type="com.web.innjoy.vo.Room"/>
-		<typeAlias alias="bsn_user" type="com.web.innjoy.vo.Bsn_user"/>
-		<typeAlias alias="ProRoom" type="com.web.innjoy.vo.ProRoom"/> <!-- 추가된 것 -->
-		<typeAlias alias="reservation" type="com.web.innjoy.vo.Reservation"/>
-		<typeAlias alias="res_cancle" type="com.web.innjoy.vo.Res_cancle"/>
 		<typeAlias alias="user" type="com.web.innjoy.vo.User"/>
-		<typeAlias alias="resUser" type="com.web.innjoy.vo.ResUser"/> <!-- 추가된 것 -->
+		<typeAlias alias="product_head" type="com.web.innjoy.vo.Product_head"/>
+		<typeAlias alias="productHead_p" type="com.web.innjoy.vo.ProductHead_p"/>
+		<typeAlias alias="product" type="com.web.innjoy.vo.Product"/>
+		<typeAlias alias="pro_type_id" type="com.web.innjoy.vo.Pro_type_id"/>
+		<typeAlias alias="pro_img" type="com.web.innjoy.vo.Pro_img"/>
+		<typeAlias alias="recomm" type="com.web.innjoy.vo.Recomm"/>
+		<typeAlias alias="recomm_comm" type="com.web.innjoy.vo.Recomm_comm"/>
+		<typeAlias alias="board_img" type="com.web.innjoy.vo.Board_img"/>
+		<typeAlias alias="pro_img" type="com.web.innjoy.vo.Pro_img"/>
+		<typeAlias alias="bsn_user" type="com.web.innjoy.vo.Bsn_user"/>
+		<typeAlias alias="review" type="com.web.innjoy.vo.Review"/>
+		<typeAlias alias="review_comm" type="com.web.innjoy.vo.Review_comm"/>
+		<typeAlias alias="review_img" type="com.web.innjoy.vo.Review_img"/>
+		<typeAlias alias="product_review" type="com.web.innjoy.vo.Product_review"/>
+		<typeAlias alias="productReview_r" type="com.web.innjoy.vo.ProductReview_r"/>
+		<typeAlias alias="room" type="com.web.innjoy.vo.Room"/>
+		<typeAlias alias="room_img" type="com.web.innjoy.vo.Room_img"/>
+		<typeAlias alias="reservation" type="com.web.innjoy.vo.Reservation"/>
 		
+		<typeAlias alias="product_recomm" type="com.web.innjoy.vo.Product_recomm"/>
+		<typeAlias alias="productRecomm_r" type="com.web.innjoy.vo.ProductRecomm_r"/>
+		
+		<typeAlias alias="product_roomfilter" type="com.web.innjoy.vo.Product_roomfilter"/>
+		<typeAlias alias="productRoom_f" type="com.web.innjoy.vo.ProductRoom_f"/>
+		<typeAlias alias="mainProduct_p" type="com.web.innjoy.vo.MainProduct_p"/>
+		<typeAlias alias="mainReview_r" type="com.web.innjoy.vo.MainReview_r"/>
+		<typeAlias alias="mainRecomm_r" type="com.web.innjoy.vo.MainRecomm_r"/>
+		
+		<typeAlias alias="product_roomfilter2" type="com.web.innjoy.vo.Product_roomfilter2"/>		
+
+		<typeAlias alias="room_img" type="com.web.innjoy.vo.Room_img"/>
+
+		<typeAlias alias="product_recomm" type="com.web.innjoy.vo.Product_recomm"/>
+		<typeAlias alias="productRecomm_r" type="com.web.innjoy.vo.ProductRecomm_r"/>
 		<typeAlias alias="productsch" type="com.web.innjoy.vo.ProductSch"/>
-		<typeAlias alias="bsnreviewmng" type="com.web.innjoy.vo.BsnReviewMng"/>	
-		<typeAlias alias="review" type="com.web.innjoy.vo.Review"/>	
+		<typeAlias alias="resuser" type="com.web.innjoy.vo.ResUser"/>
+		<typeAlias alias="productins" type="com.web.innjoy.vo.ProductIns"/>
+		<typeAlias alias="roomins" type="com.web.innjoy.vo.RoomIns"/>
+		<typeAlias alias="bsnreviewmng" type="com.web.innjoy.vo.BsnReviewMng"/>
+		<typeAlias alias="productsch" type="com.web.innjoy.vo.ProductSch"/>
+		<typeAlias alias="ProRoom" type="com.web.innjoy.vo.ProRoom"/>
+		<typeAlias alias="RecommComments" type="com.web.innjoy.vo.RecommComments"/>
+		<typeAlias alias="board" type="com.web.innjoy.vo.Board"/>
+
 	</typeAliases>
+	
 </configuration>

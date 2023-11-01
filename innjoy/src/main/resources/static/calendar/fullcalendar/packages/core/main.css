@@ -261,14 +261,15 @@ temporary rendered events).
   font-size: 0.85em;
   line-height: 1.4;
   border-radius: 3px;
-  border: 1px solid #B0CC69;
+  /*border: 1px solid #B0CC69;*/
 }
-
+/*
 .fc-event,
 .fc-event-dot {
-  background-color: #B0CC69;
-  /* default BACKGROUND color */
+  background-color: #B0CC69;*/
+  /* default BACKGROUND color
 }
+*/
 
 .fc-event,
 .fc-event:hover {

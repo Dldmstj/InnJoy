@@ -78,10 +78,10 @@ input[type=radio]:checked+label {
 	function login_check() {
 		var input_id = $("#input_id").val()
 		var input_pass = $("#input_pass").val()
-		if (input_id == "") {
+		if (input_id.trim().length<=0) {
 			$("#ck_loginId").text("아이디를 입력하세요.")
 			$("#input_id").focus()
-		} else if (input_pass == "") {
+		} else if (input_pass.trim().length<=0) {
 			$("#ck_loginPass").text("비밀번호를 입력하세요.")
 			$("#input_pass").focus()
 		} else {
@@ -104,13 +104,13 @@ input[type=radio]:checked+label {
 					alert("가입되지 않은 아이디이거나, 잘못된 비밀번호입니다.")
 				} else if (rs == "ij"){
 					alert("로그인 성공")
-					location.href = "/sec/mypage"
+					location.href = "/main"
 				} else if (rs == "bsn"){
 					alert("사업자회원으로 로그인 성공")
-					location.href = "/sec/bsn_acc"
+					location.href = "/main"
 				} else if (rs == "adm"){
 					alert("관리자로 로그인 성공")
-					location.href = "/sec/adm_user"
+					location.href = "/main"
 				} else {
 					alert("error : 관리자에게 문의하세요.");
 				}
@@ -181,10 +181,10 @@ input[type=radio]:checked+label {
 		function findId_check() {
 			var findId_name = $("#findId_name").val()
 			var findId_phone = $("#findId_phone").val()
-			if (findId_name == "") {
+			if (findId_name.trim().length<=0) {
 				$("#ck_findIdName").text("이름을 입력하세요.")
 				$("#findId_name").focus()
-			} else if (findId_phone == "") {
+			} else if (findId_phone.trim().length<=0) {
 				$("#ck_findIdPhone").text("전화번호를 입력하세요.")
 				$("#findId_phone").focus()
 			} else {
@@ -280,17 +280,17 @@ input[type=radio]:checked+label {
 		 })
 		 
 		 $("#replaceBtn").click(function(){
-			 chgPass(userType);
+			 passCheck(userType);
 		 })
 		 
 		// 비밀번호 찾기 유효성
 			function findPass_check() {
 				var findPass_id = $("#findPass_id").val()
 				var findPass_phone = $("#findPass_phone").val()
-				if (findPass_id == "") {
+				if (findPass_id.trim().length<=0) {
 					$("#ck_findPassId").text("아이디를 입력하세요.")
 					$("#findPass_id").focus()
-				} else if (findPass_phone == "") {
+				} else if (findPass_phone.trim().length<=0) {
 					$("#ck_findPassPhone").text("전화번호를 입력하세요.")
 					$("#findPass_phone").focus()
 				} else {
@@ -325,6 +325,21 @@ input[type=radio]:checked+label {
 				})
 			}
 			
+			function passCheck(userType){
+				var replacePass= $("#replacePass").val()
+				var rePass= $("#rePass").val()
+				
+				if(replacePass.trim().length<=0){
+					$("#ck_replacePass").text("비밀번호를 입력하세요.")
+					$("#replacePass").focus()
+				}else if(replacePass != rePass){
+					$("#ck_rePass").text( "비밀번호가 일치하지 않습니다.")
+					$("#rePass").val("").focus()
+				}else{
+					chgPass(userType)
+				}
+			}
+
 			function chgPass(userType){
 				var pass = $("#replacePass").val()
 				var id = $("#findPass_id").val()
@@ -372,6 +387,10 @@ input[type=radio]:checked+label {
 				}else{
 					alert("error: 관리자에게 문의하세요.")
 				}
+				$("#findPassForm").show()
+				$("#replacePassForm").hide()
+				$("#findPass_id").val("")
+				$("#findPass_phone").val("")
 			}
 			
 			function hideNshow(){

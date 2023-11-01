@@ -12,11 +12,13 @@ import com.web.innjoy.model.Bsn_User;
 import com.web.innjoy.model.Ij_User;
 import com.web.innjoy.model.Recomm_comm;
 import com.web.innjoy.model.Reservation;
+import com.web.innjoy.model.Review;
 import com.web.innjoy.repository.AdminRepository;
 import com.web.innjoy.repository.Bsn_UserRepository;
 import com.web.innjoy.repository.Ij_UserRepository;
 import com.web.innjoy.repository.Recomm_CommRepository;
 import com.web.innjoy.repository.ResRepository;
+import com.web.innjoy.repository.ReviewRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -33,6 +35,8 @@ public class UserService{
 	private ResRepository resRepository;
 	@Autowired
 	private Recomm_CommRepository commRepository;
+	@Autowired
+	private ReviewRepository revRepository;
 
 	/* 일반회원 */
 	
@@ -91,6 +95,10 @@ public class UserService{
     // 내가 쓴 댓글 조회
     public List<Recomm_comm> getMyCommList(Ij_User user){
     	return commRepository.findByIjUser(user);
+    }
+    // 내가 쓴 후기 조회
+    public List<Review> getMyReviewList(Reservation res){
+    	return revRepository.findByReservation(res);
     }
     // 예약하기
     public Reservation reservation(Reservation res) {
